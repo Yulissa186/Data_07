@@ -169,14 +169,16 @@
         <form method="post" enctype="multipart/form-data">
             {% csrf_token %}
 
-    
+            <div class="mb-3">
+                
+            </div>
 
             <div id="file-box" class="mb-3">
                 <label class="ds07-label">Archivo local (.arff)</label>
                 {{ form.arff_file }}
             </div>
 
-           
+            
 
             <div class="text-end">
                 <button class="ds07-btn">Visualizar</button>
