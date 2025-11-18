@@ -161,7 +161,7 @@
 
 <body>
 
-    <h1><span class="ds07-title-icon">📊</span>DataSet_07 </h1>
+    <h1><span class="ds07-title-icon">📊</span>DataSet_07</h1>
 
     <div class="ds07-panel">
         <div class="ds07-panel-title">Cargar archivo</div>
@@ -169,7 +169,14 @@
         <form method="post" enctype="multipart/form-data">
             {% csrf_token %}
 
-            
+    
+
+            <div id="file-box" class="mb-3">
+                <label class="ds07-label">Archivo local (.arff)</label>
+                {{ form.arff_file }}
+            </div>
+
+           
 
             <div class="text-end">
                 <button class="ds07-btn">Visualizar</button>
