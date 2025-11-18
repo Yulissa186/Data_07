@@ -3,380 +3,250 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>DataSet</title>
+    <title>Dataset Viewer</title>
+
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+
     <style>
-        /* Base */
-    body { background-color: #3b82f6; /* azul más claro que el anterior, no pastel */ padding: 20px; color: #e5e7eb; }
-        h1 { font-size:24px; font-weight:500; margin-bottom:20px; color:#0f172a; }
-        h6 { color:#0f172a; }
-        .panda { font-size:28px; display:inline-block; margin-right:10px; vertical-align:middle; }
+        body {
+            background: #f3f4f6;
+            padding: 30px;
+            color: #1f2937;
+            font-family: system-ui, sans-serif;
+        }
 
-        /* Cards / sections */
-    .table-wrapper, .plot-wrapper, .upload-form { background:#ffffff; padding:16px; border-radius:14px; border:2px solid #ffffff; box-shadow:0 6px 16px rgba(2,132,199,0.08); transition: transform .15s ease, box-shadow .15s ease; }
-    .table-wrapper:hover, .plot-wrapper:hover, .upload-form:hover { transform: translateY(-2px) scale(1.01); box-shadow:0 10px 28px rgba(37,99,235,0.18); }
+        h1 {
+            font-size: 26px;
+            font-weight: 600;
+            text-align: center;
+            margin-bottom: 25px;
+            color: #111827;
+        }
 
-        /* Table card header/body */
-        .data-card-header { padding:14px 20px; display:flex; align-items:center; gap:12px; background:#ffffff; border-bottom:1px solid #e5e7eb; border-top-left-radius:12px; border-top-right-radius:12px; }
-        .data-card-title { color:#0f172a; font-size:16px; font-weight:600; margin:0; }
-        .data-card-body { padding:16px; background:#ffffff; }
+        /* PANEL PRINCIPAL */
+        .panel {
+            background: #ffffff;
+            padding: 20px;
+            border-radius: 12px;
+            border: 1px solid #e5e7eb;
+            margin-bottom: 25px;
+        }
 
-        /* Table */
-        .table { margin:0; font-size:13px; border-collapse:separate; width:100%; background:#ffffff; }
-        .table th { background:#f8fafc; border-bottom:1px solid #e5e7eb; font-weight:700; color:#0f172a; padding:10px 12px; text-align:left; }
-        .table td { border-bottom:1px solid #e5e7eb; color:#111827; padding:10px 12px; vertical-align:middle; }
-        .table tbody tr:nth-child(odd) { background: #f9fbff; }
-        .table tbody tr:nth-child(even) { background: #ffffff; }
-        .data-table-container { overflow-x:auto; }
-        .scroll-sync { overflow-x:auto; overflow-y:hidden; height:12px; position:sticky; top:16px; z-index:999; background:transparent; }
-    .scroll-sync .sync-bar { height:4px; background:#ffffff; border-radius:4px; }
+        .panel-title {
+            font-size: 16px;
+            font-weight: 600;
+            margin-bottom: 12px;
+        }
 
-        /* Form */
-        .upload-form .form-label, .upload-form .form-text, .upload-form label { color: #334155; }
-        .upload-form .form-control { background: #ffffff; border:1px solid #cbd5e1; color:#0f172a; box-shadow:none; }
-        .upload-form .form-control::placeholder { color: #94a3b8; }
-        .upload-form input[type="file"] { background: #ffffff; border:1px solid #cbd5e1; color:#0f172a; width:100%; }
-        .form-check-inline { display:inline-flex; align-items:center; }
-        .form-check-label { white-space:nowrap; color:#334155; }
+        /* CAMPOS DEL FORMULARIO */
+        .input-box label {
+            font-weight: 500;
+            margin-bottom: 6px;
+            display: inline-block;
+        }
 
-        /* Buttons */
-    .btn-primary { background-color:#2563eb; border-color:#ffffff; color:#ffffff !important; transition: transform .12s ease, box-shadow .12s ease, background-color .12s ease; }
-    .btn-primary:hover, .btn-primary:focus { background-color:#1d4ed8; border-color:#ffffff; color:#ffffff !important; transform: translateY(-1px) scale(1.02); box-shadow:0 8px 18px rgba(29,78,216,0.3); }
+        .input-box input,
+        .input-box select,
+        .input-box textarea {
+            background: #ffffff;
+            border: 1px solid #cbd5e1;
+            border-radius: 8px;
+            padding: 8px 10px;
+        }
 
-        /* Plots */
-        .plot-wrapper h6 { font-weight:700; font-size:14px; margin-bottom:8px; color:#0f172a; }
-        .plot-img { width:100%; border-radius:10px; }
+        .btn-main {
+            background: #111827;
+            border: none;
+            padding: 10px 18px;
+            border-radius: 6px;
+            color: #fff;
+            font-weight: 500;
+        }
 
-    /* Lightbox */
-    .lightbox-overlay { position:fixed; inset:0; background:rgba(255,255,255,0.12); backdrop-filter: blur(8px) saturate(140%); -webkit-backdrop-filter: blur(8px) saturate(140%); display:none; align-items:center; justify-content:center; z-index:1050; opacity:0; transition: opacity .25s ease; }
-    .lightbox-overlay.active { display:flex; opacity:1; }
-    .lightbox-content { max-width:96vw; max-height:94vh; text-align:center; }
-        .lightbox-content img { max-width:100%; max-height:88vh; border-radius:10px; box-shadow:0 14px 36px rgba(0,0,0,0.6); }
-    .lightbox-caption { display:none; }
-        .lightbox-close { position:absolute; top:16px; right:20px; color:#fff; font-size:28px; cursor:pointer; }
-        .lightbox-arrow { position:absolute; top:50%; transform:translateY(-50%); color:#fff; font-size:34px; cursor:pointer; padding:10px 16px; user-select:none; }
-        .lightbox-prev { left:10px; }
-        .lightbox-next { right:10px; }
+        .btn-main:hover {
+            background: #000;
+        }
 
-        @keyframes zoomIn {
-            0% { transform: scale(0.92); opacity: 0; }
-            100% { transform: scale(1); opacity: 1; }
+        /* TABLA */
+        .table-block {
+            margin-top: 20px;
+            border-radius: 10px;
+            overflow: hidden;
+            border: 1px solid #e5e7eb;
+            background: #ffffff;
+        }
+
+        .table-block table {
+            font-size: 13px;
+        }
+
+        /* TARJETAS DE IMAGEN (GRÁFICAS) */
+        .plot-card {
+            padding: 12px;
+            background: #ffffff;
+            border-radius: 10px;
+            border: 1px solid #e5e7eb;
+            margin-bottom: 15px;
+        }
+
+        .plot-card img {
+            width: 100%;
+            border-radius: 6px;
+        }
+
+        .plot-card-title {
+            font-size: 14px;
+            margin-bottom: 8px;
+            font-weight: 600;
+        }
+
+        /* LIGHTBOX */
+        .lb-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(0,0,0,0.6);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+        }
+
+        .lb-overlay.active {
+            display: flex;
+        }
+
+        .lb-inner img {
+            max-width: 92vw;
+            max-height: 92vh;
+            border-radius: 8px;
+            box-shadow: 0 0 20px rgba(0,0,0,0.4);
+        }
+
+        .lb-close {
+            position: fixed;
+            top: 20px;
+            right: 25px;
+            font-size: 28px;
+            color: white;
+            cursor: pointer;
         }
     </style>
 </head>
+
 <body>
-    <div class="container">
-    <h1 class="text-center"><span class="panda" role="img" aria-label="panda">🐼</span>PandasArff</h1>
-        
-        <div class="upload-form">
-            <form method="post" enctype="multipart/form-data" novalidate>
-                {% csrf_token %}
 
-                <div class="mb-3">
-                    <label class="form-label">Selecciona fuente</label>
-                    <div>
-                        {% for radio in form.source %}
-                            <div class="form-check form-check-inline">
-                                {{ radio.tag }}
-                                <label class="form-check-label ms-1 me-3" for="{{ radio.id_for_label }}">{{ radio.choice_label }}</label>
-                            </div>
-                        {% endfor %}
-                    </div>
-                </div>
+    <h1>🐼 Visor de Dataset ARFF</h1>
 
-                <div id="upload-block" class="mb-3 row align-items-center">
-                    <div class="col-md-12">
-                        <label class="form-label">Subir archivo (.arff)</label>
-                        {{ form.arff_file }}
-                    </div>
-                </div>
+    <!-- Formulario -->
+    <div class="panel">
+        <div class="panel-title">Subir archivo</div>
 
-                <div id="github-block" class="mb-3" style="display:none;">
-                    <label class="form-label">URL del archivo en GitHub</label>
-                    {{ form.github_url }}
-                </div>
+        <form method="post" enctype="multipart/form-data">
+            {% csrf_token %}
 
-                <div class="d-flex justify-content-end mt-2">
-                    <button type="submit" class="btn btn-primary">Visualizar</button>
+            <div class="mb-3 input-box">
+                <label>Seleccionar fuente</label>
+                <div>
+                    {% for radio in form.source %}
+                        <label class="me-3">{{ radio.tag }} {{ radio.choice_label }}</label>
+                    {% endfor %}
                 </div>
-            </form>
+            </div>
+
+            <div id="file-box" class="input-box mb-3">
+                <label>Archivo (.arff)</label>
+                {{ form.arff_file }}
+            </div>
+
+            <div id="github-box" class="input-box mb-3" style="display:none;">
+                <label>URL en GitHub</label>
+                {{ form.github_url }}
+            </div>
+
+            <div class="text-end">
+                <button class="btn-main" type="submit">Visualizar</button>
+            </div>
+        </form>
+    </div>
+
+    {% if error %}
+        <div class="alert alert-danger">{{ error }}</div>
+    {% endif %}
+
+    {% if df_html %}
+
+    <!-- Gráficas -->
+    <div class="row g-3 mb-3">
+        {% if protocol_col %}
+        <div class="col-12">
+            <h5 class="fw-bold">{{ protocol_col }} — Distribuciones</h5>
         </div>
 
-        {% if error %}
-            <div class="alert alert-danger">
-                {{ error }}
-            </div>
-        {% endif %}
-
-        {% if df_html %}
-            <div class="row g-3 mb-4">
-                {% if protocol_col %}
-                <div class="col-12">
-                    <h6>Distribución de {{ protocol_col }} (4 vistas)</h6>
-                </div>
-                {% if plots.prot_full %}
-                <div class="col-md-3">
-                    <div class="plot-wrapper">
-                        <h6>Dataset completo</h6>
-                        <img class="plot-img" src="data:image/png;base64,{{ plots.prot_full }}" alt="protocol_type dataset" />
-                    </div>
-                </div>
-                {% endif %}
-                {% if plots.prot_train %}
-                <div class="col-md-3">
-                    <div class="plot-wrapper">
-                        <h6>Train</h6>
-                        <img class="plot-img" src="data:image/png;base64,{{ plots.prot_train }}" alt="protocol_type train" />
-                    </div>
-                </div>
-                {% endif %}
-                {% if plots.prot_val %}
-                <div class="col-md-3">
-                    <div class="plot-wrapper">
-                        <h6>Validación</h6>
-                        <img class="plot-img" src="data:image/png;base64,{{ plots.prot_val }}" alt="protocol_type val" />
-                    </div>
-                </div>
-                {% endif %}
-                {% if plots.prot_test %}
-                <div class="col-md-3">
-                    <div class="plot-wrapper">
-                        <h6>Test</h6>
-                        <img class="plot-img" src="data:image/png;base64,{{ plots.prot_test }}" alt="protocol_type test" />
-                    </div>
-                </div>
-                {% endif %}
-                {% endif %}
-            </div>
-
-            <div class="table-wrapper">
-                <div class="data-card-header">
-                    <span class="panda" role="img" aria-label="panda" style="font-size:22px;">🐼</span>
-                    <div>
-                        <p class="data-card-title">Contenido: {{ file_name }}</p>
-                        <small style="color:#475569;">{{ num_rows }} filas × {{ num_cols }} columnas</small>
-                    </div>
-                </div>
-
-                <div class="data-card-body">
-                    <div class="data-table-container">
-                        {{ df_html|safe }}
-                    </div>
+        {% for name, img in plots.items %}
+            {% if img %}
+            <div class="col-md-3">
+                <div class="plot-card">
+                    <div class="plot-card-title">{{ name }}</div>
+                    <img class="plot-img" src="data:image/png;base64,{{ img }}" alt="{{ name }}">
                 </div>
             </div>
-
-            <div class="row mt-4 g-3">
-                {% if plots.split_sizes %}
-                <div class="col-md-6">
-                    <div class="row mt-4 g-3"></div>
-                </div>
-                {% if plots.prot_full %}
-                <div class="col-md-3">
-                    <div class="plot-wrapper">
-                        <h6>Dataset completo</h6>
-                        <img class="plot-img" src="data:image/png;base64,{{ plots.prot_full }}" alt="protocol_type dataset" />
-                    </div>
-                </div>
-                {% endif %}
-                {% if plots.prot_train %}
-                <div class="col-md-3">
-                    <div class="plot-wrapper">
-                        <h6>Train</h6>
-                        <img class="plot-img" src="data:image/png;base64,{{ plots.prot_train }}" alt="protocol_type train" />
-                    </div>
-                </div>
-                {% endif %}
-                {% if plots.prot_val %}
-                <div class="col-md-3">
-                    <div class="plot-wrapper">
-                        <h6>Validación</h6>
-                        <img class="plot-img" src="data:image/png;base64,{{ plots.prot_val }}" alt="protocol_type val" />
-                    </div>
-                </div>
-                {% endif %}
-                {% if plots.prot_test %}
-                <div class="col-md-3">
-                    <div class="plot-wrapper">
-                        <h6>Test</h6>
-                        <img class="plot-img" src="data:image/png;base64,{{ plots.prot_test }}" alt="protocol_type test" />
-                    </div>
-                </div>
-                {% endif %}
-                {% endif %}
-            </div>
+            {% endif %}
+        {% endfor %}
         {% endif %}
     </div>
-    <div id="lightbox" class="lightbox-overlay" role="dialog" aria-modal="true" aria-hidden="true">
-        <div class="lightbox-close" aria-label="Cerrar" title="Cerrar">×</div>
-        <div class="lightbox-arrow lightbox-prev" aria-label="Anterior" title="Anterior">‹</div>
-        <div class="lightbox-arrow lightbox-next" aria-label="Siguiente" title="Siguiente">›</div>
-        <div class="lightbox-content">
-            <img id="lightbox-img" alt="" />
-            <div id="lightbox-cap" class="lightbox-caption"></div>
+
+    <!-- Tabla -->
+    <div class="panel">
+        <div class="panel-title">Archivo: {{ file_name }}</div>
+        <p>{{ num_rows }} filas × {{ num_cols }} columnas</p>
+
+        <div class="table-block">
+            {{ df_html|safe }}
         </div>
     </div>
 
-    <script>
-        function toggleSource() {
-            const uploadBlock = document.getElementById('upload-block');
-            const githubBlock = document.getElementById('github-block');
-            const radios = document.querySelectorAll('input[name="source"]');
-            let val = 'upload';
-            radios.forEach(r => { if (r.checked) val = r.value; });
-            if (val === 'upload') {
-                uploadBlock.style.display = '';
-                githubBlock.style.display = 'none';
-            } else {
-                uploadBlock.style.display = 'none';
-                githubBlock.style.display = '';
-            }
-        }
-        document.addEventListener('DOMContentLoaded', function(){
-            const radios = document.querySelectorAll('input[name="source"]')
-            radios.forEach(r => r.addEventListener('change', toggleSource));
-            toggleSource();
+    {% endif %}
 
-            const tableContainer = document.querySelector('.data-table-container');
-            const topSync = document.createElement('div');
-            topSync.className = 'scroll-sync';
+    <!-- LIGHTBOX -->
+    <div id="lightbox" class="lb-overlay">
+        <div class="lb-close">×</div>
+        <div class="lb-inner">
+            <img id="lb-img" src="">
+        </div>
+    </div>
 
-            if (tableContainer) {
-                const parent = tableContainer.parentNode;
-                parent.insertBefore(topSync, tableContainer);
+<script>
+    /* Cambiar origen: archivo / GitHub */
+    function switchSource() {
+        const radios = document.querySelectorAll('input[name="source"]');
+        let val = [...radios].find(r => r.checked).value;
 
-                const updateSync = () => {
-                    const table = tableContainer.querySelector('table');
-                    topSync.innerHTML = '';
-                    if (table) {
-                        const inner = document.createElement('div');
-                        inner.className = 'sync-bar';
-                        inner.style.width = table.scrollWidth + 'px';
-                        topSync.appendChild(inner);
-                    }
-                };
+        document.getElementById("file-box").style.display = val === "upload" ? "block" : "none";
+        document.getElementById("github-box").style.display = val === "github" ? "block" : "none";
+    }
 
-                topSync.addEventListener('scroll', () => { tableContainer.scrollLeft = topSync.scrollLeft; });
-                tableContainer.addEventListener('scroll', () => { topSync.scrollLeft = tableContainer.scrollLeft; });
-                window.addEventListener('resize', updateSync);
-                updateSync();
-            }
+    document.querySelectorAll('input[name="source"]').forEach(r => {
+        r.addEventListener('change', switchSource);
+    });
+    switchSource();
 
-            // Lightbox gallery for plots
-            const imgs = Array.from(document.querySelectorAll('.plot-img'));
-            const overlay = document.getElementById('lightbox');
-            const imgEl = document.getElementById('lightbox-img');
-            const capEl = document.getElementById('lightbox-cap');
-            const btnClose = overlay.querySelector('.lightbox-close');
-            const btnPrev = overlay.querySelector('.lightbox-prev');
-            const btnNext = overlay.querySelector('.lightbox-next');
-            let current = -1;
+    /* Lightbox */
+    const imgs = document.querySelectorAll(".plot-img");
+    const overlay = document.getElementById("lightbox");
+    const lbImg = document.getElementById("lb-img");
 
-            function openLightbox(index){
-                if(index < 0 || index >= imgs.length) return;
-                current = index;
-                const src = imgs[current].getAttribute('src');
-                const alt = imgs[current].getAttribute('alt') || '';
-                // Animación estilo iOS ajustada: clonar desde miniatura hacia el tamaño final real para evitar "salto" al final
-                const thumb = imgs[current];
-                const rect = thumb.getBoundingClientRect();
-                const clone = thumb.cloneNode(true);
-                clone.style.position = 'fixed';
-                clone.style.left = rect.left + 'px';
-                clone.style.top = rect.top + 'px';
-                clone.style.width = rect.width + 'px';
-                clone.style.height = rect.height + 'px';
-                clone.style.margin = 0;
-                clone.style.zIndex = 1100;
-                clone.style.transition = 'all .35s cubic-bezier(0.16, 0.68, 0.43, 0.99)';
-                clone.style.borderRadius = '10px';
-                document.body.appendChild(clone);
-
-                // Pre-cargar para conocer proporción
-                const tempImg = new Image();
-                tempImg.onload = () => {
-                    const padding = 0.08; // 8% margen
-                    const maxW = window.innerWidth * (1 - padding);
-                    const maxH = window.innerHeight * (1 - padding);
-                    const ratio = tempImg.naturalWidth / tempImg.naturalHeight || 1;
-                    let targetW = maxW;
-                    let targetH = targetW / ratio;
-                    if (targetH > maxH) { targetH = maxH; targetW = targetH * ratio; }
-                    const targetLeft = (window.innerWidth - targetW)/2;
-                    const targetTop = (window.innerHeight - targetH)/2;
-
-                    // Mostrar overlay; preparar imagen final con tamaño fijo para evitar "encogimiento" al terminar
-                    overlay.classList.add('active');
-                    overlay.setAttribute('aria-hidden', 'false');
-                    imgEl.style.opacity = '0';
-                    imgEl.style.transition = 'none';
-                    imgEl.style.width = targetW + 'px';
-                    imgEl.style.height = targetH + 'px';
-                    // También ajustar el contenedor para estabilizar el layout
-                    const lbContent = overlay.querySelector('.lightbox-content');
-                    if (lbContent) {
-                        // Fijar contenedor exactamente en el destino del clon para evitar "salto"
-                        lbContent.style.position = 'fixed';
-                        lbContent.style.left = targetLeft + 'px';
-                        lbContent.style.top = targetTop + 'px';
-                        lbContent.style.width = targetW + 'px';
-                        lbContent.style.height = targetH + 'px';
-                    }
-                    imgEl.setAttribute('src', src);
-                    imgEl.setAttribute('alt', alt);
-                    // No mostrar caption para evitar texto a la derecha
-
-                    requestAnimationFrame(()=>{
-                        clone.style.left = targetLeft + 'px';
-                        clone.style.top = targetTop + 'px';
-                        clone.style.width = targetW + 'px';
-                        clone.style.height = targetH + 'px';
-                        clone.style.boxShadow = '0 20px 50px rgba(0,0,0,0.55)';
-                    });
-
-                    clone.addEventListener('transitionend', ()=>{
-                        clone.remove();
-                        // Mostrar ya la imagen grande; evitar segundo zoom
-                        requestAnimationFrame(()=>{ imgEl.style.opacity = '1'; });
-                    }, { once:true });
-                };
-                tempImg.src = src;
-            }
-            function closeLightbox(){
-                overlay.classList.remove('active');
-                overlay.setAttribute('aria-hidden', 'true');
-                // Resetear tamaños para que el próximo cálculo se aplique limpio
-                imgEl.style.width = '';
-                imgEl.style.height = '';
-                const lbContent = overlay.querySelector('.lightbox-content');
-                if (lbContent) {
-                    lbContent.style.position = '';
-                    lbContent.style.left = '';
-                    lbContent.style.top = '';
-                    lbContent.style.width = '';
-                    lbContent.style.height = '';
-                }
-                current = -1;
-            }
-            function next(){ if(current !== -1) openLightbox((current + 1) % imgs.length); }
-            function prev(){ if(current !== -1) openLightbox((current - 1 + imgs.length) % imgs.length); }
-
-            imgs.forEach((img, i) => {
-                img.style.cursor = 'zoom-in';
-                img.addEventListener('click', () => openLightbox(i));
-                img.addEventListener('keydown', (e) => { if(e.key === 'Enter' || e.key === ' '){ e.preventDefault(); openLightbox(i); }});
-                img.setAttribute('tabindex', '0');
-            });
-            btnClose.addEventListener('click', closeLightbox);
-            overlay.addEventListener('click', (e) => { if(e.target === overlay) closeLightbox(); });
-            btnNext.addEventListener('click', next);
-            btnPrev.addEventListener('click', prev);
-            document.addEventListener('keydown', (e) => {
-                if(!overlay.classList.contains('active')) return;
-                if(e.key === 'Escape') closeLightbox();
-                if(e.key === 'ArrowRight') next();
-                if(e.key === 'ArrowLeft') prev();
-            });
+    imgs.forEach(img => {
+        img.style.cursor = "zoom-in";
+        img.addEventListener("click", () => {
+            lbImg.src = img.src;
+            overlay.classList.add("active");
         });
-    </script>
+    });
+
+    document.querySelector(".lb-close").onclick = () => {
+        overlay.classList.remove("active");
+    };
+</script>
+
 </body>
 </html>
