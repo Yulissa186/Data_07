@@ -161,7 +161,7 @@
 
 <body>
 
-    <h1><span class="ds07-title-icon">📊</span>DataSet_07 — Visor ARFF</h1>
+    <h1><span class="ds07-title-icon">📊</span>DataSet_07 </h1>
 
     <div class="ds07-panel">
         <div class="ds07-panel-title">Cargar archivo</div>
@@ -169,24 +169,7 @@
         <form method="post" enctype="multipart/form-data">
             {% csrf_token %}
 
-            <div class="mb-3">
-                <label class="ds07-label">Seleccionar origen</label>
-                <div>
-                    {% for radio in form.source %}
-                        <label class="me-3">{{ radio.tag }} {{ radio.choice_label }}</label>
-                    {% endfor %}
-                </div>
-            </div>
-
-            <div id="file-box" class="mb-3">
-                <label class="ds07-label">Archivo local (.arff)</label>
-                {{ form.arff_file }}
-            </div>
-
-            <div id="github-box" class="mb-3" style="display:none;">
-                <label class="ds07-label">URL de GitHub</label>
-                {{ form.github_url }}
-            </div>
+            
 
             <div class="text-end">
                 <button class="ds07-btn">Visualizar</button>
